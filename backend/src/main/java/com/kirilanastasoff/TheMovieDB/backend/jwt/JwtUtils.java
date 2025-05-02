@@ -20,27 +20,26 @@ import io.jsonwebtoken.UnsupportedJwtException;
 public class JwtUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 	
-	private String jwtSecret = "theMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecret";
+	private final String JWT_SECRET = "theMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecrettheMovieDBSecret";
 
-	private int jwtExpirationMs = 86400000;
-
+	private final int JWT_EXPIRATION_MS = 86400000;
 	
 	public String generateJwtToken(Authentication authentication) {
 
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
 		return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date())
-				.setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+				.setExpiration(new Date((new Date()).getTime() + JWT_EXPIRATION_MS))
+				.signWith(SignatureAlgorithm.HS512, JWT_SECRET).compact();
 	}
 
 	public String getUserNameFromJwtToken(String token) {
-		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+		return Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getSubject();
 	}
 
 	public boolean validateJwtToken(String authToken) {
 		try {
-			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+			Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(authToken);
 			return true;
 		} catch (SignatureException e) {
 			logger.error("Invalid JWT signature: {}", e.getMessage());

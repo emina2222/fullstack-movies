@@ -2,8 +2,8 @@ package com.kirilanastasoff.TheMovieDB.backend.controller;
 
 import java.util.List;
 
-import com.kirilanastasoff.TheMovieDB.backend.model.Movie;
-import com.kirilanastasoff.TheMovieDB.backend.services.MovieService;
+import com.kirilanastasoff.TheMovieDB.backend.model.Visitor;
+import com.kirilanastasoff.TheMovieDB.backend.services.VisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,38 +16,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/movies")
-public class MoviesController {
+@RequestMapping("/visitor")
+public class VisitorController {
 
 	@Autowired
-	private MovieService movieService;
+	private VisitorService visitorService;
 
 	@GetMapping
-	public ResponseEntity<List<Movie>> getAll() {
-		return new ResponseEntity<>(movieService.getAll(), HttpStatus.OK);
+	public ResponseEntity<List<Visitor>> getAll() {
+		return new ResponseEntity<>(visitorService.getAll(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Movie> getById(@PathVariable("id") Long id) {
-		return new ResponseEntity<>(movieService.getById(id), HttpStatus.OK);
+	public ResponseEntity<Visitor> getById(@PathVariable("id") Long id) {
+		return new ResponseEntity<>(visitorService.getById(id), HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
-		Movie saved = movieService.create(movie);
-		return new ResponseEntity<>(saved, HttpStatus.CREATED);
+	public ResponseEntity<Visitor> create(@RequestBody Visitor visitor) {
+		return new ResponseEntity<>(visitorService.create(visitor), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
-		movieService.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		visitorService.deleteById(id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
+
 	@DeleteMapping
-	public ResponseEntity<HttpStatus> deleteAll() {
-		movieService.deleteAll();
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<HttpStatus> delete() {
+		visitorService.deleteAll();
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 }
