@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Benefits = ({Benefits}) => {
+const Benefits = () => {
     return (
         <>
             <div className="benefits-card">

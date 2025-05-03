@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-export const localObj={
+export const localObj = {
     currentPage: window.location.pathname,
-    search:{
-        term:'',
-        type:'',
-        page:1,
-        totalPages:1,
-        totalResults:0,
+    search: {
+        term: '',
+        type: '',
+        page: 1,
+        totalPages: 1,
+        totalResults: 0,
     },
-    api:{
+    api: {
         key: '134394aa4ce3b3f13628fa60f2f17bfe',
         url: 'https://api.themoviedb.org/3/'
     },
@@ -21,44 +21,36 @@ export const localObj={
 }
 
 // const MOVIES_API = 'https://api.themoviedb.org/3/movie/popular?api_key=134394aa4ce3b3f13628fa60f2f17bfe';
-export async function fetchData(endpoint){
-    const key=  localObj.api.key;
+export async function fetchData(endpoint: any) {
+    const key = localObj.api.key;
     const url = localObj.api.url;
 
     console.log(`${url}${endpoint}?api_key=${key}&language=en-Us`)
     const response = await fetch(`${url}${endpoint}?api_key=${key}&language=en-Us`);
-    const data = await response.json();
-    return data
+    return await response.json()
 }
 
 
-export async function searchData(movie, searchTerm, pageNumber =1){
-    const key=  localObj.api.key;
+export async function searchData(movie: any, searchTerm: any, pageNumber = 1) {
+    const key = localObj.api.key;
     const url = localObj.api.url;
 
 
     const response = await fetch(`${url}search/${movie}?api_key=${key}&language=en-Us&query=${searchTerm}&page=${pageNumber}`);
     console.log(`${url}search/${movie}?api_key=${key}&language=en-Us&query=${searchTerm}&page=${pageNumber}`)
-    const data = await response.json();
-    return data
+    return await response.json()
 }
 
 
-
-
-
 // http://localhost:8081/api/movies
-export async function backEndCall(endpoint, tempObj){
+export async function backEndCall(endpoint: string, tempObj: any) {
     const url = localObj.backend.url;
 
-    console.log(`${url}${endpoint}`)
+    console.log(`${url}${endpoint}`);
 
+    const response = await axios.post(`${url}${endpoint}`, tempObj);
 
+    console.log(response);
 
-    // const response = await fetch(`${url}${endpoint}`);
-    const response = axios.post(`${url}${endpoint}`, tempObj)
-    console.log(response)
-
-    return await response.json();
-
+    return response.data;
 }

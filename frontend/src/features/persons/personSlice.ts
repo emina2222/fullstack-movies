@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchData, backEndCall } from '../../util/helper';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {backEndCall, fetchData} from '../../util/helper';
+import {People} from "../../types/People";
 
 // ----------- Async Thunks ------------
 export const listPeople = createAsyncThunk(
@@ -18,8 +19,7 @@ export const listPersonDetails = createAsyncThunk(
     'person/details',
     async (id: string, { rejectWithValue }) => {
         try {
-            const response = await fetchData(`person/${id}`);
-            return response;
+            return await fetchData(`person/${id}`);
         } catch (err: any) {
             return rejectWithValue(err.response);
         }
@@ -30,8 +30,7 @@ export const savePersonDetails = createAsyncThunk(
     'person/save',
     async (person: any, { rejectWithValue }) => {
         try {
-            const response = await backEndCall('people', person);
-            return response;
+            return await backEndCall('people', person);
         } catch (err: any) {
             return rejectWithValue(err.response);
         }
@@ -52,7 +51,7 @@ export const listTopBilledActors = createAsyncThunk(
 
 // ----------- Initial State ------------
 interface PersonState {
-    people: any[];
+    people: People;
     person: any;
     topBilledActors: any[];
     loading: boolean;
@@ -60,7 +59,7 @@ interface PersonState {
 }
 
 const initialState: PersonState = {
-    people: [],
+    people: { cast: [] },
     person: {},
     topBilledActors: [],
     loading: false,
