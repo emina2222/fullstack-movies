@@ -59,7 +59,6 @@ export async function backEndCall(endpoint, tempObj){
     const response = axios.post(`${url}${endpoint}`, tempObj)
     console.log(response)
 
-    const data = await response.json();
-    return data
+    return await response.json();
 
 }
