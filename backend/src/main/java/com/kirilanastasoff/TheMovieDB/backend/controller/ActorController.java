@@ -2,8 +2,8 @@ package com.kirilanastasoff.TheMovieDB.backend.controller;
 
 import java.util.List;
 
-import com.kirilanastasoff.TheMovieDB.backend.model.Visitor;
-import com.kirilanastasoff.TheMovieDB.backend.services.VisitorService;
+import com.kirilanastasoff.TheMovieDB.backend.model.Actor;
+import com.kirilanastasoff.TheMovieDB.backend.services.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,36 +16,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/visitor")
-public class VisitorController {
+@RequestMapping("/actor")
+public class ActorController {
 
 	@Autowired
-	private VisitorService visitorService;
+	private ActorService actorService;
 
 	@GetMapping
-	public ResponseEntity<List<Visitor>> getAll() {
-		return new ResponseEntity<>(visitorService.getAll(), HttpStatus.OK);
+	public ResponseEntity<List<Actor>> getAll() {
+		return new ResponseEntity<>(actorService.getAll(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Visitor> getById(@PathVariable("id") Long id) {
-		return new ResponseEntity<>(visitorService.getById(id), HttpStatus.OK);
+	public ResponseEntity<Actor> getById(@PathVariable("id") Long id) {
+		return new ResponseEntity<>(actorService.getById(id), HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<Visitor> create(@RequestBody Visitor visitor) {
-		return new ResponseEntity<>(visitorService.create(visitor), HttpStatus.OK);
+	public ResponseEntity<Actor> create(@RequestBody Actor actor) {
+		return new ResponseEntity<>(actorService.create(actor), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
-		visitorService.deleteById(id);
+		actorService.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	@DeleteMapping
 	public ResponseEntity<HttpStatus> delete() {
-		visitorService.deleteAll();
+		actorService.deleteAll();
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 

@@ -1,18 +1,24 @@
 package com.kirilanastasoff.TheMovieDB.backend.services;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.kirilanastasoff.TheMovieDB.backend.model.Visitor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kirilanastasoff.TheMovieDB.backend.model.User;
 
+@Getter @Setter
 public class UserDetailsImpl implements UserDetails {
+
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -35,34 +41,16 @@ public class UserDetailsImpl implements UserDetails {
 		this.authorities = authorities;
 	}
 
-	public static UserDetailsImpl build(User user) {
-		List<GrantedAuthority> authorities = user.getRoles().stream()
+	public static UserDetailsImpl build(Visitor visitor) {
+		List<GrantedAuthority> authorities = visitor.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
 
-		return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), authorities);
+		return new UserDetailsImpl(visitor.getId(), visitor.getUsername(), visitor.getEmail(), visitor.getPassword(), authorities);
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	@Override
-	public String getPassword() {
-		return password;
-	}
-
-	@Override
-	public String getUsername() {
-		return username;
 	}
 
 	@Override

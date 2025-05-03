@@ -1,87 +1,69 @@
 package com.kirilanastasoff.TheMovieDB.backend.model;
 
-import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Size;
+
 @Entity
-@Table(name = "people")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "visitor", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
+		@UniqueConstraint(columnNames = "email") })
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
 public class Visitor {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 
-	@Column(name = "adult")
-	private boolean adult;
+	@Size(max = 20)
+	@Column(name = "username")
+	private String username;
 
-	@ElementCollection
-	@CollectionTable(name = "known_as", joinColumns = @JoinColumn(name = "known_as_id"))
-	@Column(name = "also_known_as")
-	private List<String> productionCompanies;
+	@Size(max = 40)
+	@Column(name = "email")
+	private String email;
 
-	@Column(name = "biography", length= 4092)
-	private String biography;
+	@Size(max = 80)
+	@Column(name = "password")
+	private String password;
 
-	@Column(name = "birth_day")
-	private Date birthDay;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "visitor_2_role",
+			joinColumns = @JoinColumn(name = "id_visitor"),
+			inverseJoinColumns = @JoinColumn(name = "id_role")
+	)
+	private Set<Role> roles = new HashSet<>();
 
-	@Column(name = "death_day")
-	private Date deadthDay;
+	public Visitor( @Size(max = 20) String username, @Size(max = 40) String email,
+				 @Size(max = 80) String password) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
 
-	@Column(name = "image")
-	private String image;
-
-	@Column(name = "gender")
-	private int gender;
-
-	@Column(name = "homepage")
-	private String homepage;
-
-	@Column(name = "the_movie_db_id")
-	private Long theMovieDbId;
-
-	@Column(name = "imdb_id")
-	private String imdbId;
-
-	@Column(name = "known_for_department")
-	private String knownForDepartment;
-
-	@Column(name = "name")
-	private String name;
-
-	@Column(name = "place_of_birth")
-	private String placeOfBirth;
-
-	@Column(name = "popularity")
-	private double popularity;
-
-	@Column(name = "profile_path")
-	private String profilePath;
 
 	@Override
 	public String toString() {
-		return "People [id=" + id + ", adult=" + adult + ", productionCompanies=" + productionCompanies + ", biography="
-				+ biography + ", birthDay=" + birthDay + ", deadthDay=" + deadthDay + ", image=" + image + ", gender="
-				+ gender + ", homepage=" + homepage + ", theMovieDbId=" + theMovieDbId + ", imdbId=" + imdbId
-				+ ", knownForDepartment=" + knownForDepartment + ", name=" + name + ", placeOfBirth=" + placeOfBirth
-				+ ", popularity=" + popularity + ", profilePath=" + profilePath + ", hashCode()=" + hashCode() + "]";
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", roles="
+				+ roles + ", hashCode()=" + hashCode() + "]";
 	}
 
 }

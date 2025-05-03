@@ -38,8 +38,8 @@ public class TvShow {
 	private String overview;
 
 	@ElementCollection
-	@CollectionTable(name = "directors_companies_tv", joinColumns = @JoinColumn(name = "tv_director_id"))
-	@Column(name = "production_companies_tv")
+	@CollectionTable(name = "directors_company_tv", joinColumns = @JoinColumn(name = "id_tv_director"))
+	@Column(name = "production_company_tv")
 	private List<String> productionCompaniesTV;
 	
 	@Column(name = "vote_average")
@@ -49,12 +49,12 @@ public class TvShow {
 	private int voteCount;
 
 	@ElementCollection
-	@CollectionTable(name = "tv_genres", joinColumns = @JoinColumn(name = "tv_id"))
-	@Column(name = "genres")
+	@CollectionTable(name = "tv_genre", joinColumns = @JoinColumn(name = "id_tv"))
+	@Column(name = "genre")
 	private List<String> genres;
 
-	@Column(name = "the_movie_db_id")
-	private Long theMovieDbId;
+	@Column(name = "id_movie_db")
+	private Long idMovieDb;
 
 	@Column(name = "original_name")
 	private String originalName;
@@ -66,7 +66,7 @@ public class TvShow {
 	public String toString() {
 		return "TV [id=" + id + ", name=" + name + ", posterPath=" + posterPath + ", overview=" + overview
 				+ ", productionCompanies=" + productionCompaniesTV + ", voteAverage=" + voteAverage + ", voteCount="
-				+ voteCount + ", genres=" + genres + ", theMovieDbId=" + theMovieDbId + ", originalName=" + originalName + ", firstAirDate=" + firstAirDate
+				+ voteCount + ", genres=" + genres + ", idMovieDb=" + idMovieDb + ", originalName=" + originalName + ", firstAirDate=" + firstAirDate
 				+ ", hashCode()=" + hashCode() + "]";
 	}
 

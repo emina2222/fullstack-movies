@@ -1,7 +1,6 @@
 package com.kirilanastasoff.TheMovieDB.backend.repository;
 
-import java.util.Date;
-import java.util.List;
+import java.util.Optional;
 
 import com.kirilanastasoff.TheMovieDB.backend.model.Visitor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,10 +8,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VisitorRepository extends JpaRepository<Visitor, Long> {
-	List<Visitor> findByNameContaining(String name);
+	
+	Optional<Visitor> findByUsername(String username);
 
-	List<Visitor> findByHomepage(String homepage);
+	Boolean existsByUsername(String username);
 
-	List<Visitor> findByBirthDay(Date birthDay);
+	Boolean existsByEmail(String email);
 
 }

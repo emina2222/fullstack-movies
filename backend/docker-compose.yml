@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  eventified-db:
+    image: postgres:14
+    container_name: postgres-movies-db
+    restart: always
+    environment:
+      - POSTGRES_DB=movies
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5435:5432"
+
+#in order to keep data in postgres database when container is restarted
+volumes:
+  postgres-data:

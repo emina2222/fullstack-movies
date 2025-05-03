@@ -37,8 +37,8 @@ public class Movie {
 	private String overview;
 
 	@ElementCollection
-	@CollectionTable(name = "directors_companies", joinColumns = @JoinColumn(name = "director_id"))
-	@Column(name = "production_companies")
+	@CollectionTable(name = "directors_company", joinColumns = @JoinColumn(name = "id_director"))
+	@Column(name = "production_company")
 	private List<String> productionCompanies;
 
 	@Column(name = "user_score")
@@ -48,8 +48,8 @@ public class Movie {
 	private String status;
 
 	@ElementCollection
-	@CollectionTable(name = "movies_genres", joinColumns = @JoinColumn(name = "movies_id"))
-	@Column(name = "genres")
+	@CollectionTable(name = "movie_genre", joinColumns = @JoinColumn(name = "id_movie"))
+	@Column(name = "genre")
 	private List<String> genres;
 
 	@Column(name = "duration")
@@ -65,7 +65,7 @@ public class Movie {
 	public String toString() {
 		return "Movie [id=" + id + ", name=" + name + ", image=" + image + ", overview=" + overview
 				+ ", productionCompanies=" + productionCompanies + ", userScore=" + userScore + ", status=" + status
-				+ ", genres=" + genres + ", duration=" + duration + ", theMovieDbId=" + theMovieDbId + ", releaseDate="
+				+ ", genres=" + genres + ", duration=" + duration + ", idMovieDb=" + theMovieDbId + ", releaseDate="
 				+ releaseDate + ", hashCode()=" + hashCode() + "]";
 	}
 
